@@ -1,11 +1,7 @@
 name: Build ARM
 
-on:
-  pull_request:
-  push:
-  release:
-    types:
-      - created
+on: 
+    workflow_dispatch:
 
 jobs:
   # ---------------------------------------
