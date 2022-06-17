@@ -33,7 +33,6 @@
 #include "device/usbd_pvt.h"
 
 #include "ch341_device.h"
-#include <math.h>
 
 //--------------------------------------------------------------------+
 // MACRO CONSTANT TYPEDEF
@@ -207,12 +206,12 @@ static inline void ch341_decode_bit_rate(ch341d_interface_t *p_ch341)
   uint8_t baud_fact = (p_ch341->register_data[REG_DIDX_PRESCALER] >> 2) & 0x01;
   uint8_t baud_ps = p_ch341->register_data[REG_DIDX_PRESCALER] & 0x03;
   TU_LOG1("ch341_decode_bit_rate: baud_div=%u baud_fact=%u baud_ps=%u\r\n", baud_div, baud_fact, baud_ps);
-  uint32_t calc_bit_rate = (uint32_t)lroundf(CH341_CLKRATE / ((float)pow(2.0F, (12.0F - 3.0F * (float)baud_ps - (float)baud_fact)) * (float)baud_div));
+  uint32_t calc_bit_rate = (uint32_t)(CH341_CLKRATE / ((1 << (12 - 3 * baud_ps - baud_fact)) * baud_div));
   int index;
 
   for (index = 0; index < (int)((sizeof(ch341_known_baud_rates) / sizeof(uint32_t))); index++)
   {
-    int max_diff = lroundf((float)ch341_known_baud_rates[index] * 0.002F);
+    int max_diff = (int)((float)ch341_known_baud_rates[index] * 0.002F);
     if (calc_bit_rate >= ch341_known_baud_rates[index] - max_diff && calc_bit_rate <= ch341_known_baud_rates[index] + max_diff)
     {
       p_ch341->line_coding.bit_rate = ch341_known_baud_rates[index];
