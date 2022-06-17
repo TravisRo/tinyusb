@@ -46,7 +46,7 @@
 // https://github.com/torvalds/linux/blob/master/drivers/usb/serial/ch341.c
 //////////////////////////////////////////////////////////////////////////////
 
-#define CH341_CLKRATE 48000000.0F
+#define CH341_CLKRATE 48000000UL
 
 /* flags for IO-Bits */
 #define CH341_BIT_RTS (1 << 6)
@@ -211,7 +211,7 @@ static inline void ch341_decode_bit_rate(ch341d_interface_t *p_ch341)
 
   for (index = 0; index < (int)((sizeof(ch341_known_baud_rates) / sizeof(uint32_t))); index++)
   {
-    int max_diff = (int)((float)ch341_known_baud_rates[index] * 0.002F);
+    int max_diff = (int)((ch341_known_baud_rates[index] * 2) / 1000);
     if (calc_bit_rate >= ch341_known_baud_rates[index] - max_diff && calc_bit_rate <= ch341_known_baud_rates[index] + max_diff)
     {
       p_ch341->line_coding.bit_rate = ch341_known_baud_rates[index];
