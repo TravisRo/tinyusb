@@ -100,7 +100,7 @@ void tud_ch341_line_state_cb(ch341_line_state_t line_state)
 void tud_ch341_line_coding_cb(ch341_line_coding_t const* p_line_coding)
 {
 	printf("BITRATE=%lu (%s%u%u) RX:%s TX:%s\r\n", 
-		p_line_coding->bit_rate,
+		(unsigned long)p_line_coding->bit_rate,
 		_par_str[p_line_coding->parity],
 		p_line_coding->data_bits,
 		p_line_coding->stop_bits ? 2 : 1,
