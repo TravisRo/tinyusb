@@ -8,7 +8,7 @@ jobs:
   # Unit testing with Ceedling
   # ---------------------------------------
   unit-test:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
     - name: Setup Ruby
       uses: ruby/setup-ruby@v1
