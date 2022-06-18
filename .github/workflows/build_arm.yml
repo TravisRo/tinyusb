@@ -98,7 +98,7 @@ jobs:
         tar -C ~/cache/toolchain -xaf toolchain.tar.gz
 
     - name: Set Toolchain Path
-      run: echo >> $GITHUB_PATH `echo ~/cache/toolchain/*/bin`
+      run: echo >> $GITHUB_PATH `echo ~/cache/toolchain/xpack-arm-none-eabi-gcc-10.2.1-1.1/bin`
 
     - name: Build
       run: python3 tools/build_family.py ${{ matrix.family }}
